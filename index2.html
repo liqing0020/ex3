@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>十二铜首</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      /* 公用样式 */
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        overflow: hidden;
+      }
+      /* 图片列表 */
+      .image_list {
+        text-align: center;
+        margin-top: 10%;
+      }
+      .image_list img {
+        width: 300px;
+        opacity: 0.7;
+        cursor: pointer;
+      }
+      .image_list img:hover {
+        opacity: 1;
+      }
+      /* 大背景 */
+      #bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #000000;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 80% auto;
+        display: none;
+        z-index: 1;
+      }
+      /* 视频播放器 */
+      #video-player {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 800px;
+        background: #000;
+        display: none;
+      }
+      /* 关闭按钮 */
+      .close_btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        cursor: pointer;
+        display: none;
+      }
+      .redirect-btn {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .redirect-btn:hover {
+        background-color: #45a049;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="image_list">
+      <img src="img/OIP-C (11).jpg" alt="视频1" data-video="img/2.mp4" />
+      <img src="img/OIP-C (12).jpg" alt="视频2" data-video="img/1.mp4" />
+      <img src="img/OIP-C (13).jpg" alt="视频3" data-video="img/3.mp4" />
+      <img src="img/OIP-C (14).jpg" alt="视频4" data-video="img/4.mp4" />
+    </div>
+
+    <button class="redirect-btn" onclick="window.location.href='index3.html'">下一页</button>
+
+    <div id="bg"></div>
+    <div id="video-player">
+      <video id="video" width="100%" controls autoplay >
+        <source id="video-source" src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+
+    <img class="close_btn" src="img/th (5).jpg" title="关闭" />
+
+    <script type="text/javascript">
+
+      const images = document.querySelectorAll('.image_list img');
+      const bg = document.getElementById('bg');
+      const videoPlayer = document.getElementById('video-player');
+      const video = document.getElementById('video');
+      const closeBtn = document.querySelector('.close_btn');
+      const videoSource = document.getElementById('video-source');
+
+
+      images.forEach(img =>{
+        img.addEventListener('click', () => {
+          const videoSrc = img.getAttribute('data-video');
+          videoSource.src = videoSrc; 
+          video.load(); 
+          video.play(); 
+          
+          videoPlayer.style.display = 'block'; 
+          closeBtn.style.display = 'block'; 
+        });
+      });
+
+
+      closeBtn.addEventListener('click', () =>{
+        bg.style.display = 'none';
+        videoPlayer.style.display = 'none';
+        closeBtn.style.display = 'none';
+        video.pause(); 
+        video.currentTime = 0; 
+      });
+
+
+        
+    </script>
+  </body>
+</html>

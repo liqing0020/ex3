@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片切换示例</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .images img {
+            width: 600px;
+            height: 400px;
+            display: none; /* 初始隐藏所有图片 */
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #006f8e;
+        }
+
+        .btn:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 新增返回首页按钮的样式 */
+        .home-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .home-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="images">
+            <img src="res/131.jpg" alt="Image 1" class="image">
+            <img src="res/132.jpg" alt="Image 2" class="image">
+            <img src="res/133.jpg" alt="Image 3" class="image">
+            <img src="res/134.jpg" alt="Image 4" class="image">
+        </div>
+        <button class="btn" id="nextButton">切换图片</button>
+        <!-- 新增的返回首页按钮 -->
+        <button class="home-btn" onclick="window.location.href='index.html'">返回首页</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var currentImageIndex = 0;
+            var images = $(".images img");
+            var totalImages = images.length;
+
+            // 显示第一张图片
+            $(images[currentImageIndex]).fadeIn();
+
+            // 切换图片的逻辑
+            $("#nextButton").click(function() {
+                var button = $(this);
+
+                // 禁用按钮，防止快速点击
+                button.prop("disabled", true);
+
+                // 当前显示的图片渐隐
+                $(images[currentImageIndex]).fadeOut(500, function() {
+                    // 更新图片索引，确保循环切换
+                    currentImageIndex = (currentImageIndex + 1) % totalImages;
+
+                    // 显示下一张图片
+                    $(images[currentImageIndex]).fadeIn(500, function() {
+                        // 图片切换完成，启用按钮
+                        button.prop("disabled", false);
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

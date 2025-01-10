@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择题问答</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        .option label {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn, .home-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .submit-btn:hover, .home-btn:hover {
+            background-color: #45a049;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>选择题问答</h2>
+        <div class="question">
+            <p>马首铜像于哪一年回归？</p>
+        </div>
+
+        <div class="options">
+            <div class="option">
+                <input type="radio" id="option1" name="answer" value="A">
+                <label for="option1">A. 2018</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="option2" name="answer" value="B">
+                <label for="option2">B. 2019</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="option3" name="answer" value="C">
+                <label for="option3">C. 2020</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="option4" name="answer" value="D">
+                <label for="option4">D. 2021</label>
+            </div>
+        </div>
+
+        <button id="submit-btn" class="submit-btn">提交答案</button>
+        
+        <!-- 返回首页按钮 -->
+        <button class="home-btn" onclick="window.location.href='index3.html';">返回</button>
+
+        <div id="feedback" class="feedback">
+            <!-- 答案反馈会显示在这里 -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#submit-btn').click(function() {
+                var selectedOption = $('input[name="answer"]:checked').val(); // 获取用户选择的选项
+
+                if (!selectedOption) {
+                    $('#feedback').text("请先选择一个答案。").removeClass().addClass("feedback incorrect");
+                    return;
+                }
+
+                // 设置正确答案
+                var correctAnswer = "B";
+
+                if (selectedOption === correctAnswer) {
+                    $('#feedback').text("恭喜你，答对了！").removeClass().addClass("feedback correct");
+                } else {
+                    $('#feedback').text("抱歉，答错了。正确答案是 B.2019").removeClass().addClass("feedback incorrect");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+

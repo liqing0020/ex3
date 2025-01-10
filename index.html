@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <title>5.2 切屏动画</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        overflow: hidden;
+      }
+      
+      #mainDiv {
+        position: relative;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        transition: all 1s ease;
+      }
+      
+      #mainDiv div {
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+      
+      .page1 {
+        background-image: url("res/131.jpg");
+      }
+      
+      .page2 {
+        background-image: url("res/132.jpg");
+      }
+      
+      .page3 {
+        background-image: url("res/133.jpg");
+      }
+      
+      .page4 {
+        background-image: url("res/134.jpg");
+      }
+      
+      .btn_list {
+        position: fixed;
+        top: 30%;
+        right: 50px;
+      }
+      
+      ul {
+        list-style-type: none;
+      }
+      
+      li {
+        width: 20px;
+        height: 20px;
+        margin-top: 10px;
+        border-radius: 20px;
+        background-color: #3d3d3d;
+        cursor: pointer;
+      }
+      
+      #li0 {
+        background-color: #10508d;
+      }
+      
+      p {
+        position: fixed;
+        bottom: 30px;
+        width: 100%;
+        text-align: center;
+      }
+      
+      p a {
+        color: #fff;
+        text-decoration: none;
+      }
+      
+      /* CSS 动画效果 */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .home-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+      
+      /* 页面动画过渡 */
+      .page {
+        animation: fadeInUp 1s ease-out forwards;
+      }
+    </style>
+    <script type="text/javascript">
+      var index = 0; // 当前显示第几屏。0代表第1屏
+      var totalPages = 4; // 总页面数量
+      var scrolling = false; // 防止快速滚动
+
+      window.onload = function () {
+        // 为li添加鼠标点击事件
+        for (var i = 0; i < totalPages; i++) {
+          document.getElementById("li" + i).onclick = function () {
+            index = this.id.replace("li", ""); // 通过id获取当前显示第几屏
+            pageAnimate();
+          };
+        }
+
+        // 窗口大小重置
+        window.onresize = function () {
+          // 暂时去掉mainDiv的过渡动画
+          document.getElementById("mainDiv").style.transition = "all 0s ease";
+
+          pageAnimate(); // 切屏
+
+          // 重新加上mainDiv的过渡动画
+          window.setTimeout(function () {
+            document.getElementById("mainDiv").style.transition = "all 1s ease";
+          }, 10);
+        };
+
+        // 添加滚动事件监听
+        window.addEventListener('wheel', handleWheel);
+      };
+
+      // 鼠标滚轮滚动处理
+      function handleWheel(e) {
+        if (scrolling) return; // 如果正在处理动画，则忽略此次滚动事件
+        scrolling = true;
+
+        // 判断滚动方向
+        if (eY > 0) {
+          // 向下滚动，切换到下一页
+          if (index < totalPages - 1) {
+            index++;
+          }
+        } else {
+          // 向上滚动，切换到上一页
+          if (index > 0) {
+            index--;
+          }
+        }
+
+        pageAnimate();
+
+        // 设置延时以防止滚动过快
+        setTimeout(function () {
+          scrolling = false;
+        }, 1000); // 1秒后允许再次滚动
+      }
+
+      // 设置显示哪一屏，并设置右浮动按钮显示样式
+      function pageAnimate() {
+        var offsetHeight = document.body.offsetHeight;
+        document.getElementById("mainDiv").style.top = -(offsetHeight * index) + "px";
+
+        // 设置右则浮动按钮的显示样式
+        for (var i = 0; i < totalPages; i++) {
+          document.getElementById("li" + i).style.backgroundColor = "#3D3D3D";
+        }
+        document.getElementById("li" + index).style.backgroundColor = "#10508D";
+      }
+    </script>
+  </head>
+  <body>
+
+    <div id="mainDiv">
+      <div class="page page1"></div>
+      <div class="page page2"></div>
+      <div class="page page3"></div>
+      <div class="page page4"></div>
+    </div>
+
+    <div class="btn_list">
+      <ul>
+        <li id="li0"></li>
+        <li id="li1"></li>
+        <li id="li2"></li>
+        <li id="li3"></li>
+      </ul>
+    </div>
+    <button class="home-btn" onclick="window.location.href='index2.html'">下一页</button>
+  </body>
+</html>
